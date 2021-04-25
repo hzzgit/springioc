@@ -5,11 +5,13 @@ import com.yy.controller.FishController;
 import com.yy.vo.PostClas;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -19,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class DispatcherServlet {
+public class DispatcherServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
 
@@ -246,9 +248,14 @@ public class DispatcherServlet {
         FishController fishController = (FishController) instanceMap.get(className);
         //调用实例
         try {
-            method.invoke(fishController, new Object[]{request, response, null});
+           //method.invoke(fishController, new Object[]{request, response, null});
+            PrintWriter writer = response.getWriter();
+            writer.write(String.valueOf(method.invoke(fishController)));
+            writer.flush();
+
         } catch (IllegalAccessException e) {
             // TODO Auto-generated catch block
+
             e.printStackTrace();
         } catch (IllegalArgumentException e) {
             // TODO Auto-generated catch block

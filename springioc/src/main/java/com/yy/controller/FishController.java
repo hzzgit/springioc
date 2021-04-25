@@ -15,7 +15,7 @@ public class FishController {
     FishService fishService;
 
     //响应请求的方法
-    @RequestMapping("get")
+    @RequestMapping("get.do")
     @PostConstruct
     public String getFish(){
         return fishService.get();
